@@ -10,8 +10,8 @@ with open(sys.argv[1], 'r') as csvfile, open(sys.argv[2], 'w') as outfile:
     for row in reader:
         l = 'paragem(\''
         l += ascii_only(row['gid'])+sep+', '
-        l += (ascii_only(row['latitude']) if len(row['latitude']) > 0 else '0') +', '
-        l += (ascii_only(row['longitude']) if len(row['longitude']) > 0 else '0') +', '+sep
+        l += (ascii_only(row['latitude']) if len(row['latitude']) > 0 else '_') +', '
+        l += (ascii_only(row['longitude']) if len(row['longitude']) > 0 else '_') +', '+sep
         l += ascii_only(row['Estado de Conservacao'])+sep+', '+sep
         l += ascii_only(row['Tipo de Abrigo'])+sep+', '+sep
         l += ascii_only(row['Abrigo com Publicidade?'])+sep+', '+sep
