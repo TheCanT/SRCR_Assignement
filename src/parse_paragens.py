@@ -7,6 +7,8 @@ def ascii_only (input):
 
 with open(sys.argv[1], 'r') as csvfile, open(sys.argv[2], 'w') as outfile:
     reader = csv.DictReader(csvfile)
+    list_of_gid = []
+    
     for row in reader:
         l = 'paragem(\''
         l += ascii_only(row['gid'])+sep+', '
@@ -20,4 +22,9 @@ with open(sys.argv[1], 'r') as csvfile, open(sys.argv[2], 'w') as outfile:
         l += ascii_only(row['Codigo de Rua'])+sep+', '+sep
         l += ascii_only(row['Nome da Rua'])+sep+', '+sep
         l += ascii_only(row['Freguesia'])+sep+').\n'
+        
         outfile.write(l)
+        
+        list_of_gid.append(row['gid'])
+    
+    outfile.write('gids('+str(list_of_gid)+').\n')
