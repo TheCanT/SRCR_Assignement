@@ -808,3 +808,9 @@ gid,latitude,longitude,Estado de Conservacao,Tipo de Abrigo,Abrigo com Publicida
 8,-106980.35,-95289.3,Bom,Sem Abrigo,No,Carris,776,103,Rua DamiÃ£o de GÃ³is,"AlgÃ©s, Linda-a-Velha e Cruz Quebrada-Dafundo"
 5,-106997.31,-95311.49,Bom,Sem Abrigo,No,Carris,776,103,Rua DamiÃ£o de GÃ³is,"AlgÃ©s, Linda-a-Velha e Cruz Quebrada-Dafundo"
 167,-107073,-95199.03,Bom,Fechado dos Lados,Yes,Carris,98,102,Largo Dom Manuel I,
+
+001,0,3,Bom,Sem Abrigo,No,Carris,"001,003",103,Rua DamiÃ£o de GÃ³is,"AlgÃ©s, Linda-a-Velha e Cruz Quebrada-Dafundo"
+002,0,2,Bom,Sem Abrigo,No,Carris,"001,004,007,009",103,Rua DamiÃ£o de GÃ³is,"AlgÃ©s, Linda-a-Velha e Cruz Quebrada-Dafundo"
+003,0,1,Bom,Fechado dos Lados,Yes,Carris,"007,009",102,Largo Dom Manuel I,
+004,0,1.5,Bom,Fechado dos Lados,Yes,Carris,"001,003",102,Largo Dom Manuel I,
+005,0,2.5,Bom,Fechado dos Lados,Yes,Carris,"001,004",102,Largo Dom Manuel I,
