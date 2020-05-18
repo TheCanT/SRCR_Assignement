@@ -58,6 +58,7 @@ carreira_em_comum(P_ATUAL,P_PROX) :-
 
 %*
 %- existe_caminho('001','003',R).
+%- existe_caminho('183','79',R).
 existe_caminho(A,B,P) :- caminho(A,[B],P).
 
 caminho(A,[A|P1],[A|P1]).
