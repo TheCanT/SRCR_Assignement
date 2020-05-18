@@ -3,8 +3,10 @@
 
 
 :- dynamic paragem/11.
+:- dynamic adjacencia/2.
 
-:- include('stdout').
+:- include('paragens.pl').
+:- include('adjacencias.pl').
 
 
 %- (+[string], -R)
