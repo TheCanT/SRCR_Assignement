@@ -1,4 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 %- (+[string], -R)
 %- dado lista de gids retorna o gid com mais carreiras
 paragem_com_mais_carreiras([H],H).
@@ -6,6 +5,7 @@ paragem_com_mais_carreiras([H|T],R) :-
     paragem_com_mais_carreiras(T,RT), 
     maior_lista_de_carreiras(H,RT,R)
 .
+
 
 %- (+string, +string, -R)
 %- dado dois gids retorna o gid com mais carreiras
@@ -18,6 +18,8 @@ maior_lista_de_carreiras(A,B,A) :-
     length(CB,TB),
     (TA > TB ;TA == TB)
 .
+
+
 maior_lista_de_carreiras(A,B,B) :-
     paragem(A,_,_,_,_,_,_,CA,_,_,_),
     paragem(B,_,_,_,_,_,_,CB,_,_,_),
@@ -25,6 +27,7 @@ maior_lista_de_carreiras(A,B,B) :-
     length(CB,TB),
     TA < TB
 .
+
 
 %- P_PROX tem alguma carreira em comum com P_ATUAL
 %carreira_em_comum('003',R).
@@ -35,6 +38,7 @@ carreira_em_comum(P_ATUAL,P_PROX) :-
     \+ (P_ATUAL == P_PROX),
     \+ -any_match(CA,CB)
 .
+
 
 %- verdadei se duas listas nao tiverem algo em comum
 %any_match(['005','009'],['001','005','009'],R).
@@ -57,8 +61,6 @@ caminho(A,[Y|P1],P) :-
     adjacente(Y,[Y|P1],X),
     caminho(A,[X,Y|P1],P)
 .
-%*
-%paragens_carreira()
 
 
 %adjacentes('001',['003','004','005'],R).
@@ -72,7 +74,6 @@ adjacente(X,PATH,R) :-
     closer_list(X,RL,R)
 .
 
-%- ponto mais perto de A entre B e C é o B
 
 %mais_perto_list('005',['002','003','004','005'],R).
 %- dado uma paragem P e uma lista de paragens L
@@ -81,6 +82,8 @@ closer_list(P,L,R) :-
     member(R,L),
     closer_aux(P,L,R)
 .
+
+
 %mais_perto_aux('001',['002','003','004','005'],'005').
 closer_aux(_,[],_).
 closer_aux(P,[HL|TL],MP) :-

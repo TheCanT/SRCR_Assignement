@@ -1,4 +1,3 @@
-
 :- use_module(library(lists)).
 
 % - Data - %
@@ -7,7 +6,6 @@
 
 :- include('./prologData/paragens.pl').
 :- include('./prologData/adjacencias.pl').
-
 
 % - Auxiliar Files - %
 :- include('path_algorithm.pl').
@@ -20,30 +18,18 @@ all_paths(A,B,R) :-
     findall(TRY,check_path(A,B,TRY),R)
 .
 
+
 %- check_path('183','79',R).
 check_path(A, B, P) :-
     build_path(A, [B], P)
 .
+
 
 build_path(A, [A|P1], [A|P1]).
 build_path(A, [Y|P1], P) :-
    check_closer_adjacencia(X, Y, [Y|P1]),
    \+ memberchk(X, [Y|P1]),
    build_path(A, [X,Y|P1], P)
-.
-
-
-%- check_closer_adjacencia(X,'255',[]).
-check_closer_adjacencia(X, Y, PATH) :-
-    findall(TRY, adjacencia(TRY, Y), ADJACENTES),
-    remove_equal(PATH, ADJACENTES, NOT_EQUALS),
-    remove_dups(NOT_EQUALS, NO_DUPS),
-    sort_distance(Y, NO_DUPS, SORTED_BY_DISTANCE),
-    member(X, SORTED_BY_DISTANCE)
-.
-
-check_adjacencia(X, Y, _) :-
-    adjacencia(X, Y)
 .
 
 
