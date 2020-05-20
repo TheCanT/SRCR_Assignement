@@ -14,8 +14,8 @@
 
 %- all_paths('183','79',R).
 %- all_paths('183','79',R), length(R,N).
-all_paths(A,B,R) :-
-    findall(TRY,check_path(A,B,TRY),R)
+all_paths(A, B, R) :-
+    findall(TRY, check_path(A, B, TRY), R)
 .
 
 
@@ -34,9 +34,9 @@ build_path(A, [Y|P1], P) :-
 
 
 %- check_path('183','79',R), calc_distance_path(R,N).
-calc_distance_path([_],0).
-calc_distance_path([H1,H2|T],R) :-
-    calc_distance_path([H2|T],RS),
-    distance(H1,H2,D),
+calc_distance_path([_], 0).
+calc_distance_path([H1,H2|T], R) :-
+    calc_distance_path([H2|T], RS),
+    distance(H1, H2, D),
     R is D + RS
 .
