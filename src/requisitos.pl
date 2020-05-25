@@ -102,6 +102,21 @@ build_path_cover(A, [Y|P1], P) :-
 
 
 
+% - Checks a path from B to A, pontos  - %
+
+check_path_inter(A, B, L, R) :-
+    append([L,[B]|[]], LR),
+    build_path_inter(A, LR, P),
+    append(P, R)
+.
+
+%- check_path_inter('183','79',[],R), calc_distance_path(R,N).
+
+build_path_inter(_, [], []).
+build_path_inter(A, [H|T], [NP|P]) :-
+    check_path(A,H,NP),
+    build_path_inter(H, T, P)
+.
 
 
 
