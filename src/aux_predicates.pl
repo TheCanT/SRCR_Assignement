@@ -1,32 +1,32 @@
-%- (+[string], -R)
-%- dado lista de gids retorna o gid com mais carreiras
-paragem_com_mais_carreiras([H],H).
-paragem_com_mais_carreiras([H|T],R) :- 
-    paragem_com_mais_carreiras(T,RT), 
-    maior_lista_de_carreiras(H,RT,R)
+% - Returns the stops with most busess - %
+max_carreiras(PATH, VALUES) :-
+    maplist(aux_num_carreiras, PATH, KEYS),
+    keys_and_values(KV_LIST, KEYS, PATH),
+    keysort(KV_LIST, SORTED),
+    reverse(SORTED, [H|T]),
+    check_equal_key(H, T, KV_MAX),
+    keys_and_values(KV_MAX, _, VALUES)
+.
+%max_carreiras(['79','261','341'],R).
+%check_path('183','79',R), calc_distance_path(R,N), max_carreiras(R,S).
+
+
+check_equal_key(H,[],[H]).
+check_equal_key(KH-VH, [KT-VT|TS], [KT-VT|KV_MAX]) :-
+    KH == KT,
+    check_equal_key(KH-VH, TS, KV_MAX)
+.
+check_equal_key(KH-VH, [KT-_|TS], KV_MAX) :-
+    \+ KH == KT,
+    check_equal_key(KH-VH, TS, KV_MAX)
 .
 
 
-%- (+string, +string, -R)
-%- dado dois gids retorna o gid com mais carreiras
-%gids(L), maior_lista_de_carreiras(L,R).
-%maior_lista_de_carreiras(['79','597','261','341'],R).
-maior_lista_de_carreiras(A,B,A) :-
+aux_num_carreiras(A,TA) :-
     paragem(A,_,_,_,_,_,_,CA,_,_,_),
-    paragem(B,_,_,_,_,_,_,CB,_,_,_),
-    length(CA,TA),
-    length(CB,TB),
-    (TA > TB ;TA == TB)
+    length(CA,TA)
 .
 
-
-maior_lista_de_carreiras(A,B,B) :-
-    paragem(A,_,_,_,_,_,_,CA,_,_,_),
-    paragem(B,_,_,_,_,_,_,CB,_,_,_),
-    length(CA,TA),
-    length(CB,TB),
-    TA < TB
-.
 
 
 %- P_PROX tem alguma carreira em comum com P_ATUAL
@@ -40,15 +40,15 @@ carreira_em_comum(P_ATUAL,P_PROX) :-
 .
 
 
-%- verdadei se duas listas nao tiverem algo em comum
-%any_match(['005','009'],['001','005','009'],R).
--any_match([],_).
--any_match([C],CS) :- \+ memberchk(C,CS).
--any_match([C|CT],CS) :-
-    \+ memberchk(C,CS), 
-    -any_match(CT,CS)
-.
 
+%- verdadei se duas listas nao tiverem algo em comum
+%any_match(['005','009'],['001','005','009']).
+%-any_match([],_).
+%-any_match([C],CS) :- \+ memberchk(C,CS).
+%-any_match([C|CT],CS) :-
+%    \+ memberchk(C,CS), 
+%    -any_match(CT,CS)
+%.
 
 %*
 %- existe_caminho('001','003',R).

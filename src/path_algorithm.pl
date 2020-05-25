@@ -1,9 +1,9 @@
 %- check_closer_adjacencia(X,'255',[]).
 check_closer_adjacencia(NEXT_STOP, CURRENT_STOP, PATH) :-
     findall(TRY, adjacencia(TRY, CURRENT_STOP), ADJACENTES),
-    remove_equal(PATH, ADJACENTES, NOT_EQUALS),
-    remove_dups(NOT_EQUALS, NO_DUPS),
-    sort_distance(CURRENT_STOP, NO_DUPS, SORTED_BY_DISTANCE),
+    remove_dups(ADJACENTES, NO_DUPS),
+    remove_equal(PATH, NO_DUPS, NOT_EQUALS),
+    sort_distance(CURRENT_STOP, NOT_EQUALS, SORTED_BY_DISTANCE),
     member(NEXT_STOP, SORTED_BY_DISTANCE)
 .
 
@@ -13,20 +13,9 @@ check_closer_adjacencia(NEXT_STOP, CURRENT_STOP, PATH) :-
 sort_distance(FST, LIST, SORTED) :-
     adjacentes_to_distanceKey(FST, LIST, PAIR_LIST),
     keysort(PAIR_LIST, SORTED_LIST),
-    listKV_to_listV(SORTED_LIST, SORTED)
+    keys_and_values(SORTED_LIST, _, SORTED)
 .
 
-
-%- list of Key-Value to list of Value
-listKV_to_listV([],[]).
-listKV_to_listV([PAIR|T], [VALUE|VALUES]) :-
-    listKV_to_listV(T, VALUES),
-    get_value(PAIR, VALUE)
-.
-
-
-%- get_value('791'-1,R).
-get_value(_ - Value , Value).
 
 
 %- with stop FST and List of stops
@@ -38,13 +27,13 @@ adjacentes_to_distanceKey(FST, [HL|TL], [PAIR|PAIR_LIST]) :-
 .
 
 
-%- makes pair of (Distance to FST)-(stop)
+% - makes pair of (Distance to FST)-(stop) - %
 distance_key(FST, Old, Dist - Old) :-
     distance(FST, Old, Dist)
 .
 
 
-%- remove_equal(['003','004','005'],['002','003','007','005','005'],R).
+%remove_equal(['003','004','005'],['002','003','007','005','005'],R).
 remove_equal([],L,L).
 remove_equal([H|T],L,R) :-
     remove_equal(T,L,RL),
@@ -52,9 +41,51 @@ remove_equal([H|T],L,R) :-
 .
 
 
-%- R = arithmetic distance between A and B
+% - R = arithmetic distance between A and B - %
 distance(A,B,R) :-
     paragem(A,AX,AY,_,_,_,_,_,_,_,_),
     paragem(B,BX,BY,_,_,_,_,_,_,_,_),
     R is sqrt((BX - AX) ** 2 + (BY - AY) ** 2)
+.
+
+
+
+
+% - Next stop from a set of firms - %
+prox_in_setOfFirm(A, B, SET) :-
+    adjacencia(A, B),
+    paragem(A,_,_,_,_,_,A_FIRM,_,_,_,_),
+    paragem(B,_,_,_,_,_,B_FIRM,_,_,_,_),
+    memberchk(A_FIRM, SET),
+    memberchk(B_FIRM, SET)
+.
+
+
+% - Next stop not from a set of firms - %
+-prox_in_setOfFirm(A, B, SET) :-
+    adjacencia(A, B),
+    paragem(A,_,_,_,_,_,A_FIRM,_,_,_,_),
+    paragem(B,_,_,_,_,_,B_FIRM,_,_,_,_),
+    \+ memberchk(A_FIRM, SET),
+    \+ memberchk(B_FIRM, SET)
+.
+
+
+% - Next stop with advertisement - %
+prox_with_advertisement(A, B) :-
+    adjacencia(A, B),
+    paragem(A,_,_,_,_,A_ADV,_,_,_,_,_),
+    paragem(B,_,_,_,_,B_ADV,_,_,_,_,_),
+    A_ADV == 'Yes',
+    B_ADV == 'Yes'
+.
+
+
+% - Next stop with cover - %
+prox_with_cover(A, B) :-
+    adjacencia(A, B),
+    paragem(A,_,_,_,A_COVER,_,_,_,_,_,_),
+    paragem(B,_,_,_,B_COVER,_,_,_,_,_,_),
+    \+ A_COVER == 'Sem Abrigo',
+    \+ B_COVER == 'Sem Abrigo'
 .

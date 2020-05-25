@@ -1,29 +1,29 @@
 :- use_module(library(lists)).
 
 % - Data - %
+
 :- dynamic paragem/11.
 :- dynamic adjacencia/2.
 
 :- include('./prologData/paragens.pl').
 :- include('./prologData/adjacencias.pl').
 
+
 % - Auxiliar Files - %
+
 :- include('path_algorithm.pl').
+:- include('aux_predicates.pl').
 
 
 
-%- all_paths('183','79',R).
-%- all_paths('183','79',R), length(R,N).
-all_paths(A, B, R) :-
-    findall(TRY, check_path(A, B, TRY), R)
-.
+% - Checks a path from B to A - %
 
-
-%- check_path('183','79',R).
 check_path(A, B, P) :-
     build_path(A, [B], P)
 .
 
+
+%- check_path('183','79',R).
 
 build_path(A, [A|P1], [A|P1]).
 build_path(A, [Y|P1], P) :-
@@ -33,7 +33,8 @@ build_path(A, [Y|P1], P) :-
 .
 
 
-%- check_path('183','79',R), calc_distance_path(R,N).
+% - Calculates the distance from a path - %
+
 calc_distance_path([_], 0).
 calc_distance_path([H1,H2|T], R) :-
     calc_distance_path([H2|T], RS),
@@ -41,8 +42,28 @@ calc_distance_path([H1,H2|T], R) :-
     R is D + RS
 .
 
+%- check_path('183','79',R), calc_distance_path(R,N).
 
-%---------------------------------pesquisa em profundidade primeiro Multi_Estados
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%--- pesquisa em profundidade primeiro Multi_Estados
 
 %- findall(TRY, resolve_pp_h('183','79',TRY), R).
 %- resolve_pp_h('183','79',R), calc_distance_path(R,N).
