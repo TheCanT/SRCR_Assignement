@@ -40,3 +40,26 @@ calc_distance_path([H1,H2|T], R) :-
     distance(H1, H2, D),
     R is D + RS
 .
+
+
+%---------------------------------pesquisa em profundidade primeiro Multi_Estados
+
+%- findall(TRY, resolve_pp_h('183','79',TRY), R).
+%- resolve_pp_h('183','79',R), calc_distance_path(R,N).
+resolve_pp_h(Origem, Destino, Caminho) :-
+    profundidade(Origem, Destino, [Origem], Caminho)
+.
+
+profundidade(Destino, Destino, H, D) :- reverse(H,D).
+profundidade(Origem, Destino, Path, C):-
+    check_closer_adjacencia1(Origem, Path, Prox),
+    profundidade(Prox, Destino, [Prox|Path], C)
+.
+
+check_closer_adjacencia1(CURRENT_STOP, PATH, NEXT_STOP) :-
+    findall(TRY, adjacencia(CURRENT_STOP, TRY), ADJACENTES),
+    remove_equal(PATH, ADJACENTES, NOT_EQUALS),
+    remove_dups(NOT_EQUALS, NO_DUPS),
+    sort_distance(CURRENT_STOP, NO_DUPS, SORTED_BY_DISTANCE),
+    member(NEXT_STOP, SORTED_BY_DISTANCE)
+.
