@@ -16,40 +16,88 @@
 
 
 
+
 % - Checks a path from B to A - %
 
 check_path(A, B, P) :-
     build_path(A, [B], P)
 .
 
-
-%- check_path('183','79',R).
+%- check_path('183','79',R), calc_distance_path(R,N).
 
 build_path(A, [A|P1], [A|P1]).
 build_path(A, [Y|P1], P) :-
    check_closer_adjacencia(X, Y, [Y|P1]),
-   \+ memberchk(X, [Y|P1]),
    build_path(A, [X,Y|P1], P)
 .
 
 
-% - Calculates the distance from a path - %
 
-calc_distance_path([_], 0).
-calc_distance_path([H1,H2|T], R) :-
-    calc_distance_path([H2|T], RS),
-    distance(H1, H2, D),
-    R is D + RS
+% - Checks a path in a set of firms - %
+
+check_path_firms(A, B, S, P) :-
+    build_path_firms(A, [B], S, P)
 .
 
-%- check_path('183','79',R), calc_distance_path(R,N).
+%- check_path_firms('183','79',['Vimeca'],R), calc_distance_path(R,N).
+
+build_path_firms(A, [A|P1], _, [A|P1]).
+build_path_firms(A, [Y|P1], S, P) :-
+   check_closer_adjacencia(X, Y, [Y|P1]),
+   prox_in_setOfFirm(X, Y, S),
+   build_path_firms(A, [X,Y|P1], S, P)
+.
 
 
 
+% - Checks a path not in a set of firms - %
+
+check_path_nFirms(A, B, S, P) :-
+    build_path_nFirms(A, [B], S, P)
+.
+
+%- build_path_nFirms('183','79',['lol'],R), calc_distance_path(R,N).
+
+build_path_nFirms(A, [A|P1], _, [A|P1]).
+build_path_nFirms(A, [Y|P1], S, P) :-
+   check_closer_adjacencia(X, Y, [Y|P1]),
+   -prox_in_setOfFirm(X, Y, S),
+   build_path_nFirms(A, [X,Y|P1], S, P)
+.
 
 
 
+% - Checks a path from B to A - %
 
+check_path_advertisement(A, B, P) :-
+    build_path_adv(A, [B], P)
+.
+
+%- check_path_advertisement('183','79',R), calc_distance_path(R,N).
+
+build_path_adv(A, [A|P1], [A|P1]).
+build_path_adv(A, [Y|P1], P) :-
+   check_closer_adjacencia(X, Y, [Y|P1]),
+   prox_with_advertisement(X, Y),
+   build_path_adv(A, [X,Y|P1], P)
+.
+
+
+
+% - Checks a path from B to A - %
+
+check_path_cover(A, B, P) :-
+    build_path_cover(A, [B], P)
+.
+
+%- check_path_cover('183','79',R), calc_distance_path(R,N).
+
+build_path_cover(A, [A|P1], [A|P1]).
+build_path_cover(A, [Y|P1], P) :-
+   check_closer_adjacencia(X, Y, [Y|P1]),
+   prox_with_cover(X, Y),
+   build_path_cover(A, [X,Y|P1], P)
+.
 
 
 
