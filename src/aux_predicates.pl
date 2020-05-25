@@ -38,3 +38,46 @@ calc_distance_path([H1,H2|T], R) :-
     R is D + RS
 .
 
+
+% - Next stop from a set of firms - %
+
+prox_in_setOfFirm(A, B, SET) :-
+    adjacencia(A, B),
+    paragem(A,_,_,_,_,_,A_FIRM,_,_,_,_),
+    paragem(B,_,_,_,_,_,B_FIRM,_,_,_,_),
+    memberchk(A_FIRM, SET),
+    memberchk(B_FIRM, SET)
+.
+
+
+% - Next stop not from a set of firms - %
+
+-prox_in_setOfFirm(A, B, SET) :-
+    adjacencia(A, B),
+    paragem(A,_,_,_,_,_,A_FIRM,_,_,_,_),
+    paragem(B,_,_,_,_,_,B_FIRM,_,_,_,_),
+    \+ memberchk(A_FIRM, SET),
+    \+ memberchk(B_FIRM, SET)
+.
+
+
+% - Next stop with advertisement - %
+
+prox_with_advertisement(A, B) :-
+    adjacencia(A, B),
+    paragem(A,_,_,_,_,A_ADV,_,_,_,_,_),
+    paragem(B,_,_,_,_,B_ADV,_,_,_,_,_),
+    A_ADV == 'Yes',
+    B_ADV == 'Yes'
+.
+
+
+% - Next stop with cover - %
+
+prox_with_cover(A, B) :-
+    adjacencia(A, B),
+    paragem(A,_,_,_,A_COVER,_,_,_,_,_,_),
+    paragem(B,_,_,_,B_COVER,_,_,_,_,_,_),
+    \+ A_COVER == 'Sem Abrigo',
+    \+ B_COVER == 'Sem Abrigo'
+.

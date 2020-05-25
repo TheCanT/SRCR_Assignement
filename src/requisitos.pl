@@ -1,5 +1,6 @@
 :- use_module(library(lists)).
 
+
 % - Data - %
 
 :- dynamic paragem/11.

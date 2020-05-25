@@ -1,4 +1,4 @@
-%- check_closer_adjacencia(X,'255',[]).
+% - Returns the next stop closer - %
 check_closer_adjacencia(NEXT_STOP, CURRENT_STOP, PATH) :-
     findall(TRY, adjacencia(TRY, CURRENT_STOP), ADJACENTES),
     remove_dups(ADJACENTES, NO_DUPS),
@@ -9,7 +9,7 @@ check_closer_adjacencia(NEXT_STOP, CURRENT_STOP, PATH) :-
 
 
 %- sort_distance('183',['791','595','182'],R).
-%- sorts a list o stops with a given stop
+% - sorts a list o stops with a given stop - %
 sort_distance(FST, LIST, SORTED) :-
     adjacentes_to_distanceKey(FST, LIST, PAIR_LIST),
     keysort(PAIR_LIST, SORTED_LIST),
@@ -18,8 +18,9 @@ sort_distance(FST, LIST, SORTED) :-
 
 
 
-%- with stop FST and List of stops
-%- makes list of (Distance to FST)-(stop)
+% - with stop FST and List of stops - %
+% - makes list of (Distance to FST)-(stop) - %
+
 adjacentes_to_distanceKey(_, [], []).
 adjacentes_to_distanceKey(FST, [HL|TL], [PAIR|PAIR_LIST]) :-
     distance_key(FST, HL, PAIR),
@@ -28,6 +29,7 @@ adjacentes_to_distanceKey(FST, [HL|TL], [PAIR|PAIR_LIST]) :-
 
 
 % - makes pair of (Distance to FST)-(stop) - %
+
 distance_key(FST, Old, Dist - Old) :-
     distance(FST, Old, Dist)
 .
@@ -42,50 +44,9 @@ remove_equal([H|T],L,R) :-
 
 
 % - R = arithmetic distance between A and B - %
+
 distance(A,B,R) :-
     paragem(A,AX,AY,_,_,_,_,_,_,_,_),
     paragem(B,BX,BY,_,_,_,_,_,_,_,_),
     R is sqrt((BX - AX) ** 2 + (BY - AY) ** 2)
-.
-
-
-
-
-% - Next stop from a set of firms - %
-prox_in_setOfFirm(A, B, SET) :-
-    adjacencia(A, B),
-    paragem(A,_,_,_,_,_,A_FIRM,_,_,_,_),
-    paragem(B,_,_,_,_,_,B_FIRM,_,_,_,_),
-    memberchk(A_FIRM, SET),
-    memberchk(B_FIRM, SET)
-.
-
-
-% - Next stop not from a set of firms - %
--prox_in_setOfFirm(A, B, SET) :-
-    adjacencia(A, B),
-    paragem(A,_,_,_,_,_,A_FIRM,_,_,_,_),
-    paragem(B,_,_,_,_,_,B_FIRM,_,_,_,_),
-    \+ memberchk(A_FIRM, SET),
-    \+ memberchk(B_FIRM, SET)
-.
-
-
-% - Next stop with advertisement - %
-prox_with_advertisement(A, B) :-
-    adjacencia(A, B),
-    paragem(A,_,_,_,_,A_ADV,_,_,_,_,_),
-    paragem(B,_,_,_,_,B_ADV,_,_,_,_,_),
-    A_ADV == 'Yes',
-    B_ADV == 'Yes'
-.
-
-
-% - Next stop with cover - %
-prox_with_cover(A, B) :-
-    adjacencia(A, B),
-    paragem(A,_,_,_,A_COVER,_,_,_,_,_,_),
-    paragem(B,_,_,_,B_COVER,_,_,_,_,_,_),
-    \+ A_COVER == 'Sem Abrigo',
-    \+ B_COVER == 'Sem Abrigo'
 .
