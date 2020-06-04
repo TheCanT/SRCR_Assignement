@@ -25,6 +25,7 @@ check_path(A, B, P) :-
 .
 
 %- check_path('183','79',R), calc_distance_path(R,N).
+%- findall(TRY,check_path('183','79',TRY),R). (not working)
 
 build_path(A, [A|P1], [A|P1]).
 build_path(A, [Y|P1], P) :-
@@ -124,27 +125,70 @@ build_path_inter(A, [H|T], [NP|P]) :-
 
 
 
+%% -- - -- --- - --- - --- -- - -- %%
 
+% - Checks a path from B to A - %
 
-
-%--- pesquisa em profundidade primeiro Multi_Estados
-
-%- findall(TRY, resolve_pp_h('183','79',TRY), R).
-%- resolve_pp_h('183','79',R), calc_distance_path(R,N).
-resolve_pp_h(Origem, Destino, Caminho) :-
-    profundidade(Origem, Destino, [Origem], Caminho)
+check_path_2(A, B, P) :-
+    build_path2(A, [B], P)
 .
 
-profundidade(Destino, Destino, H, D) :- reverse(H,D).
-profundidade(Origem, Destino, Path, C):-
-    check_closer_adjacencia1(Origem, Path, Prox),
-    profundidade(Prox, Destino, [Prox|Path], C)
+/*
+check_path_2('183','79',R1), 
+calc_distance_path(R1,N1), 
+length(R1,L1),
+
+check_path('183','79',R2), 
+calc_distance_path(R2,N2),
+length(R2,L2).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+check_path_2('746','1025',R1), 
+calc_distance_path(R1,N1), 
+length(R1,L1),
+
+check_path('746','1025',R2), 
+calc_distance_path(R2,N2),
+length(R2,L2).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+check_path_2('182','345',R1), 
+calc_distance_path(R1,N1), 
+length(R1,L1),
+
+check_path('182','345',R2), 
+calc_distance_path(R2,N2),
+length(R2,L2).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+check_path_2('706','720',R1), 
+calc_distance_path(R1,N1), 
+length(R1,L1),
+
+check_path('706','720',R2), 
+calc_distance_path(R2,N2),
+length(R2,L2).
+
+*/
+%- check_path_2('746','1025',R), calc_distance_path(R,N).
+%- check_path('746','1025',R), calc_distance_path(R,N).
+%- check_path('183','79',R), calc_distance_path(R,N).
+%- check_path('183','79',R), calc_distance_path(R,N).
+%- findall(TRY,check_path_2('183','79',TRY),R). (not working)
+
+build_path2(A, [A|P1], [A|P1]).
+build_path2(A, [Y|P1], P) :-
+   check_closerToEnd_adjacencia(X, Y, [Y|P1], A),
+   build_path2(A, [X,Y|P1], P)
 .
 
-check_closer_adjacencia1(CURRENT_STOP, PATH, NEXT_STOP) :-
-    findall(TRY, adjacencia(CURRENT_STOP, TRY), ADJACENTES),
-    remove_equal(PATH, ADJACENTES, NOT_EQUALS),
-    remove_dups(NOT_EQUALS, NO_DUPS),
-    sort_distance(CURRENT_STOP, NO_DUPS, SORTED_BY_DISTANCE),
-    member(NEXT_STOP, SORTED_BY_DISTANCE)
+check_path_2(A, B, H) :-
+    build_path2(A, [B], P1),
+    build_path(A, [B], P2),
+    calc_distance_path(P1, D1),
+    calc_distance_path(P2, D2),
+    keys_and_values(KV, [D1,D2|[]], [P1,P2|[]]),
+    keysort(KV, SORTED),
+    keys_and_values(SORTED, _, [H|_])
 .

@@ -50,3 +50,28 @@ distance(A,B,R) :-
     paragem(B,BX,BY,_,_,_,_,_,_,_,_),
     R is sqrt((BX - AX) ** 2 + (BY - AY) ** 2)
 .
+
+
+
+%% -- - -- --- - --- - --- -- - -- %%
+
+% - Returns the next stop closer - %
+check_closerToEnd_adjacencia(NEXT_STOP, CURRENT_STOP, PATH, END) :-
+    findall(TRY, adjacencia(TRY, CURRENT_STOP), ADJACENTES),
+    remove_dups(ADJACENTES, NO_DUPS),
+    remove_equal(PATH, NO_DUPS, NOT_EQUALS),
+    sort_distance(END, NOT_EQUALS, SORTED_BY_DISTANCE),
+    member(NEXT_STOP, SORTED_BY_DISTANCE)
+%    firstN_elements(SORTED_BY_DISTANCE, 2, ARG),
+%    member(NEXT_STOP, ARG)
+.
+
+
+%- firstN_elements(['791','595','182','791','595','182'],4,R).
+firstN_elements(_,0,[]).
+firstN_elements([H],_,[H]).
+firstN_elements([HL|TL], N, [HL|T]) :-
+    N >= 0,
+    R is N-1,
+    firstN_elements(TL, R, T)
+.
