@@ -4,7 +4,7 @@
 % - Data - %
 
 :- dynamic paragem/11.
-:- dynamic adjacencia/2.
+:- dynamic adjacencia/3.
 
 :- include('./prologData/paragens.pl').
 :- include('./prologData/adjacencias.pl').

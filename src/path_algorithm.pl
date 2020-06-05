@@ -1,6 +1,7 @@
 % - Returns the next stop closer - %
+
 check_closer_adjacencia(NEXT_STOP, CURRENT_STOP, PATH) :-
-    findall(TRY, adjacencia(TRY, CURRENT_STOP), ADJACENTES),
+    findall(TRY, adjacencia(TRY, CURRENT_STOP,_), ADJACENTES),
     remove_dups(ADJACENTES, NO_DUPS),
     remove_equal(PATH, NO_DUPS, NOT_EQUALS),
     sort_distance(CURRENT_STOP, NOT_EQUALS, SORTED_BY_DISTANCE),
@@ -10,6 +11,7 @@ check_closer_adjacencia(NEXT_STOP, CURRENT_STOP, PATH) :-
 
 %- sort_distance('183',['791','595','182'],R).
 % - sorts a list o stops with a given stop - %
+
 sort_distance(FST, LIST, SORTED) :-
     adjacentes_to_distanceKey(FST, LIST, PAIR_LIST),
     keysort(PAIR_LIST, SORTED_LIST),

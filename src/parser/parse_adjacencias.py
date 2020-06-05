@@ -11,10 +11,12 @@ with open(sys.argv[len(sys.argv)-1], 'a+') as outfile:
 
             for row in reader:
                 list_of_gid.append(ascii_only(row['gid']))
+            
+            carr = row['Carreira']
 
             outfile.write('%- Carreira '+ sys.argv[j] +' !\n\n')
 
             for i in range(0,len(list_of_gid)-1):
-                outfile.write('adjacencia(\''+ str(list_of_gid[i]) +'\',\''+ str(list_of_gid[i+1]) +'\').\n')
+                outfile.write('adjacencia(\''+ str(list_of_gid[i]) +'\',\''+ str(list_of_gid[i+1]) +'\',\''+ str(carr) +'\').\n')
 
             outfile.write('\n\n\n')

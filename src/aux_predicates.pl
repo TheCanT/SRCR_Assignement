@@ -1,12 +1,12 @@
 % - Returns the stops with most busess - %
 
-max_carreiras(PATH, VALUES) :-
-    maplist(aux_num_carreiras, PATH, KEYS),
-    keys_and_values(KV_LIST, KEYS, PATH),
+max_carreiras(PATH, LIST_WITH_MORE_CARR) :-
+    maplist(aux_num_carreiras, PATH, NUM_CARR),
+    keys_and_values(KV_LIST, NUM_CARR, PATH),
     keysort(KV_LIST, SORTED),
     reverse(SORTED, [H|T]),
     check_equal_key(H, T, KV_MAX),
-    keys_and_values(KV_MAX, _, VALUES)
+    keys_and_values(KV_MAX, _, LIST_WITH_MORE_CARR)
 .
 %max_carreiras(['79','261','341'],R).
 %check_path('183','79',R), calc_distance_path(R,N), max_carreiras(R,S).
@@ -42,7 +42,7 @@ calc_distance_path([H1,H2|T], R) :-
 % - Next stop from a set of firms - %
 
 prox_in_setOfFirm(A, B, SET) :-
-    adjacencia(A, B),
+    adjacencia(A, B, _),
     paragem(A,_,_,_,_,_,A_FIRM,_,_,_,_),
     paragem(B,_,_,_,_,_,B_FIRM,_,_,_,_),
     memberchk(A_FIRM, SET),
@@ -53,7 +53,7 @@ prox_in_setOfFirm(A, B, SET) :-
 % - Next stop not from a set of firms - %
 
 -prox_in_setOfFirm(A, B, SET) :-
-    adjacencia(A, B),
+    adjacencia(A, B, _),
     paragem(A,_,_,_,_,_,A_FIRM,_,_,_,_),
     paragem(B,_,_,_,_,_,B_FIRM,_,_,_,_),
     \+ memberchk(A_FIRM, SET),
@@ -64,7 +64,7 @@ prox_in_setOfFirm(A, B, SET) :-
 % - Next stop with advertisement - %
 
 prox_with_advertisement(A, B) :-
-    adjacencia(A, B),
+    adjacencia(A, B, _),
     paragem(A,_,_,_,_,A_ADV,_,_,_,_,_),
     paragem(B,_,_,_,_,B_ADV,_,_,_,_,_),
     A_ADV == 'Yes',
@@ -75,7 +75,7 @@ prox_with_advertisement(A, B) :-
 % - Next stop with cover - %
 
 prox_with_cover(A, B) :-
-    adjacencia(A, B),
+    adjacencia(A, B, _),
     paragem(A,_,_,_,A_COVER,_,_,_,_,_,_),
     paragem(B,_,_,_,B_COVER,_,_,_,_,_,_),
     \+ A_COVER == 'Sem Abrigo',
