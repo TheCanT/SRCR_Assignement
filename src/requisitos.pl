@@ -35,6 +35,7 @@ build_path(A, [Y|P1], P) :-
 
 
 
+
 % - Checks a path in a set of firms - %
 
 check_path_firms(A, B, S, P) :-
@@ -49,6 +50,7 @@ build_path_firms(A, [Y|P1], S, P) :-
    prox_in_setOfFirm(X, Y, S),
    build_path_firms(A, [X,Y|P1], S, P)
 .
+
 
 
 
@@ -69,6 +71,7 @@ build_path_nFirms(A, [Y|P1], S, P) :-
 
 
 
+
 % - Checks a path from B to A - %
 
 check_path_advertisement(A, B, P) :-
@@ -86,6 +89,7 @@ build_path_adv(A, [Y|P1], P) :-
 
 
 
+
 % - Checks a path from B to A - %
 
 check_path_cover(A, B, P) :-
@@ -100,6 +104,7 @@ build_path_cover(A, [Y|P1], P) :-
    prox_with_cover(X, Y),
    build_path_cover(A, [X,Y|P1], P)
 .
+
 
 
 
@@ -121,17 +126,12 @@ build_path_inter(A, [H|T], [NP|P]) :-
 
 
 
+
 % - Path with the least stops   - %
 
 check_path_least_stops(A, B, S) :-
     bfs(adjacencia,A,B,S)
 .
-
-/*
-check_path_least_stops('183', '79', Solution),
-length(Solution,N),
-calc_distance_path(Solution,D).
-*/
 
 % helper predicate
 prepend(L, X, [X | L]).
@@ -155,7 +155,14 @@ bfs(Succ, Start, Goal, Solution) :-
     reverse(Solution1, Solution)
 .
 
-
+/*
+check_path_least_stops('183', '79', Solution),
+length(Solution,N),
+calc_distance_path(Solution,D).
+check_path_least_stops('183', '12', Solution),
+length(Solution,N),
+calc_distance_path(Solution,D).
+*/
 
 
 
