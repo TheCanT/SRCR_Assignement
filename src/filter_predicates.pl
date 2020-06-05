@@ -92,3 +92,7 @@ not_any_match([C|CT],CS) :-
     \+ memberchk(C,CS), 
     not_any_match(CT,CS)
 .
+
+get_paragem(GID, paragem(GID,A,B,C,D,E,F,G,H,I,J)) :- paragem(GID,A,B,C,D,E,F,G,H,I,J).
+
+get_paragem_user(GID, paragem(GID,A,B,ind,D,ind,F,G,ind,I,J)) :- paragem(GID,A,B,_,D,_,F,G,_,I,J).
