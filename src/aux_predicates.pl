@@ -81,3 +81,14 @@ prox_with_cover(A, B) :-
     \+ A_COVER == 'Sem Abrigo',
     \+ B_COVER == 'Sem Abrigo'
 .
+
+
+
+%- verdadei se duas listas nao tiverem algo em comum
+%not_any_match(['005','009'],['001','005','009']).
+not_any_match([],_).
+not_any_match([C],CS) :- \+ memberchk(C,CS).
+not_any_match([C|CT],CS) :-
+    \+ memberchk(C,CS), 
+    not_any_match(CT,CS)
+.

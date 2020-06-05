@@ -57,9 +57,28 @@ distance(A,B,R) :-
 
 %% -- - -- --- - --- - --- -- - -- %%
 
+
+%get_career_connected('183', LIST_CAREERS).
+get_career_connected_IN(A, LIST_CAREERS) :-
+    findall(TRY, adjacencia(A, _, TRY), LIST_CAREERS)
+.
+get_career_connected_OUT(B, LIST_CAREERS) :-
+    findall(TRY, adjacencia(_, B, TRY), LIST_CAREERS)
+.
+
+
+%get_num_stops_career('01', NUM_STOPS).
+get_num_stops_career(C, NUM_STOPS) :-
+    findall(TRY, adjacencia(TRY, _, C), S),
+    length(S, NUM_STOPS)
+.
+
+
+%% -- - -- --- - --- - --- -- - -- %%
+
 % - Returns the next stop closer - %
 check_closerToEnd_adjacencia(NEXT_STOP, CURRENT_STOP, PATH, END) :-
-    findall(TRY, adjacencia(TRY, CURRENT_STOP), ADJACENTES),
+    findall(TRY, adjacencia(TRY, CURRENT_STOP, _), ADJACENTES),
     remove_dups(ADJACENTES, NO_DUPS),
     remove_equal(PATH, NO_DUPS, NOT_EQUALS),
     sort_distance(END, NOT_EQUALS, SORTED_BY_DISTANCE),
