@@ -9,6 +9,7 @@ check_closer_adjacencia(NEXT_STOP, CURRENT_STOP, PATH) :-
 .
 
 
+
 %- sort_distance('183',['791','595','182'],R).
 % - sorts a list o stops with a given stop - %
 
@@ -30,11 +31,13 @@ adjacentes_to_distanceKey(FST, [HL|TL], [PAIR|PAIR_LIST]) :-
 .
 
 
+
 % - makes pair of (Distance to FST)-(stop) - %
 
 distance_key(FST, Old, Dist - Old) :-
     distance(FST, Old, Dist)
 .
+
 
 
 %remove_equal(['003','004','005'],['002','003','007','005','005'],R).
@@ -43,6 +46,7 @@ remove_equal([H|T],L,R) :-
     remove_equal(T,L,RL),
     delete(RL,H,R)
 .
+
 
 
 % - R = arithmetic distance between A and B - %

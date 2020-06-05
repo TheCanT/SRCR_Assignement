@@ -1,4 +1,4 @@
-% - Returns the stops with most busess - %
+% - Returns the stops with most career - %
 
 max_carreiras(PATH, LIST_WITH_MORE_CARR) :-
     maplist(aux_num_carreiras, PATH, NUM_CARR),

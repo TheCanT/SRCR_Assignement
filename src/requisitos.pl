@@ -117,7 +117,7 @@ check_path_inter(A, B, L, R) :-
     append(P, R)
 .
 
-%check_path_inter('183','79',[],R), calc_distance_path(R,N).
+%check_path_inter('183','79',['250'],R), calc_distance_path(R,N).
 
 build_path_inter(_, [], []).
 build_path_inter(A, [H|T], [NP|P]) :-
@@ -138,7 +138,7 @@ check_path_least_stops(A, B, S) :-
 check_path_least_stops('183', '79', Solution),
 length(Solution,N),
 calc_distance_path(Solution,D).
-check_path_least_stops('183', '12', Solution),
+check_path_least_stops('746','1025', Solution),
 length(Solution,N),
 calc_distance_path(Solution,D).
 */
@@ -174,44 +174,6 @@ build_path_new(A, [Y|P1], N, P) :-
 .
 
 
-/*
-check_path_2('183','79',R1), 
-calc_distance_path(R1,N1), 
-length(R1,L1),
-
-check_path('183','79',S), 
-calc_distance_path(S,D),
-length(S,L).
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-check_path_2('746','1025',R1), 
-calc_distance_path(R1,N1), 
-length(R1,L1),
-
-check_path('746','1025',R2), 
-calc_distance_path(R2,N2),
-length(R2,L2).
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-check_path_2('182','345',R1), 
-calc_distance_path(R1,N1), 
-length(R1,L1),
-
-check_path('182','345',R2), 
-calc_distance_path(R2,N2),
-length(R2,L2).
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-check_path_2('706','720',R1), 
-calc_distance_path(R1,N1), 
-length(R1,L1),
-
-check_path('706','720',R2), 
-calc_distance_path(R2,N2),
-length(R2,L2).
-
-*/
 %- check_path_2('746','1025',R), calc_distance_path(R,N).
 %- check_path('746','1025',R), calc_distance_path(R,N).
 %- check_path('183','79',R), calc_distance_path(R,N).
